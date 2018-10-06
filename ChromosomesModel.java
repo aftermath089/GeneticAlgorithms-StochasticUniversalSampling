@@ -20,12 +20,8 @@ class ChromosomesModel{
         this.initValue=new float[size];
         this.initKey=new int[size];
         this.pointSpace=(1/point);
-        System.out.println(pointSpace);
         this.rand=random.nextFloat(); 
-        System.out.println(rand);
         this.firstPointer=rand%pointSpace;
-        System.out.println(firstPointer);
-
     }
 
     //fungsi untuk menset key dan value dari user.
@@ -113,7 +109,6 @@ class ChromosomesModel{
     }
 
     public void SUS(){
-        System.out.println(firstPointer);
         sort();
         point();
     }
