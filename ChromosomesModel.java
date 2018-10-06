@@ -2,31 +2,41 @@ import java.util.Random;
 
 class ChromosomesModel{
     private int initKey[];
-    private double initValue[];
-    private double getValue[];
+    private float initValue[];
+    private float getValue[];
     private int size;
-    private double valueTotal=0;
+    private float point;
+    private float valueTotal=0;
+    private float pointSpace;
 
     Random random=new Random();
-    private double rand=random.nextFloat(); 
-    private double firstPointer=rand%(0.25);
+    private float rand;
+    private float firstPointer;
 
     //constructor
-    public ChromosomesModel(int size){
+    public ChromosomesModel(int size,float point){
         this.size=size;
-        this.initValue=new double[size];
+        this.point=point;
+        this.initValue=new float[size];
         this.initKey=new int[size];
+        this.pointSpace=(1/point);
+        System.out.println(pointSpace);
+        this.rand=random.nextFloat(); 
+        System.out.println(rand);
+        this.firstPointer=rand%pointSpace;
+        System.out.println(firstPointer);
+
     }
 
     //fungsi untuk menset key dan value dari user.
-    public void set(int pos, double val){
+    public void set(int pos, float val){
         valueTotal=valueTotal+val;
         initValue[pos]=val;
         initKey[pos]=pos+1;
     }
 
     //get value dari suatu key
-    public double get(int key){
+    public float get(int key){
         return getValue[key];
     }
 
@@ -42,7 +52,7 @@ class ChromosomesModel{
     public void sort(){
         for(int j=0;j<size;j++){
             for(int i=0;i<size-1;i++){
-                double valTemp=initValue[i];
+                float valTemp=initValue[i];
                 int keyTemp=initKey[i];
                 if(initValue[i]<initValue[i+1]){
                     initValue[i]=initValue[i+1];
@@ -64,7 +74,7 @@ class ChromosomesModel{
         decimalizeValue();
 
         //array untuk fungsi get() yang return value dari suatu key
-        this.getValue=new double[size+1];
+        this.getValue=new float[size+1];
         for(int i=0;i<size;i++){
             int pointer=initKey[i];
             getValue[pointer]=initValue[i];
@@ -75,8 +85,8 @@ class ChromosomesModel{
     public void point(){
         int count=0;
         int pos=0;
-        double currentPoint=firstPointer;
-        double currentTotalValue=initValue[pos];
+        float currentPoint=firstPointer;
+        float currentTotalValue=initValue[pos];
  
         System.out.println("\nfirst pointer: "+currentPoint);
         while(currentTotalValue<currentPoint){
@@ -85,7 +95,7 @@ class ChromosomesModel{
         }
         while(currentTotalValue>currentPoint){
             System.out.println("point: "+currentPoint+" cummulative value: "+currentTotalValue+" by Chromosome "+initKey[pos]);
-            currentPoint=currentPoint+0.25;
+            currentPoint=currentPoint+pointSpace;
             if(currentPoint>=1){
                 currentPoint=currentPoint-1;
             }
@@ -96,13 +106,14 @@ class ChromosomesModel{
             }
 
             count++;
-            if(count==4){
+            if(count==point){
                 break;
             }
         }
     }
 
     public void SUS(){
+        System.out.println(firstPointer);
         sort();
         point();
     }
